@@ -14,7 +14,18 @@ class Doubly_Linked_List(object):
 		self.tail = None
 
 	def prepend(self, value):
-		pass
+		'''Insert new node at the front of the list (as the Most Recently Used item in the cache)'''
+		if self.head == None:
+			self.head = Double_Node(value)
+			self.tail = self.head
+			return
+		else:
+			new_node = Double_Node(value)
+			new_node.next = self.head
+			self.head.prev = new_node
+			new_node.prev = None
+			self.head = new_node
+			return
 
 	def remove_LRU_item(self):
 		pass
