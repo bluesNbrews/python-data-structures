@@ -28,7 +28,13 @@ class Doubly_Linked_List(object):
 			return
 
 	def remove_LRU_item(self):
-		pass
+		'''The main priority here is to remove a pointer to the tail (which is the Least Recently Used item in the cache)'''
+		if self.tail == self.head:
+			return
+		new_tail = self.tail.prev
+		self.tail.prev.next = None
+		self.tail.prev = None
+		self.tail = new_tail
 
 	def get_LRU_value(self):
 		pass
