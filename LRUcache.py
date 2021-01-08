@@ -37,7 +37,9 @@ class Doubly_Linked_List(object):
 		self.tail = new_tail
 
 	def get_LRU_value(self):
-		pass
+		'''Return the value of the Least Recently Used item in the cache'''
+		if self.tail.value:
+			return self.tail.value
 
 	def update(self, value):
 		pass
