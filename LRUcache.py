@@ -42,7 +42,26 @@ class Doubly_Linked_List(object):
 			return self.tail.value
 
 	def update(self, value):
-		pass
+		'''Update the position of an item to be the Most Recently Used in the cache'''
+		if self.head == None:
+			return
+		curr_node = self.head
+		if curr_node.value == value:
+			return
+		while curr_node:
+			if curr_node.value == value:
+				if curr_node == self.tail:
+					self.remove_LRU_item()
+					self.prepend(value)
+				else:
+					curr_node.prev.next = curr_node.next
+					curr_node.next.prev = curr_node.prev
+					curr_node.next = self.head
+					self.head.prev = curr_node
+					curr_node.prev = None
+					self.head = curr_node
+					return 
+			curr_node = curr_node.next
 
 	def print(self):
 		pass
