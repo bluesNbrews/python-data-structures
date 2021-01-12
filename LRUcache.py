@@ -64,7 +64,13 @@ class Doubly_Linked_List(object):
 			curr_node = curr_node.next
 
 	def print(self):
-		pass
+		'''Iterate through the items and print'''
+		if self.head == None:
+			return
+		curr_node = self.head
+		while curr_node:
+			print(curr_node.value)
+			curr_node = curr_node.next
 
 class LRU_Cache(object):
 
