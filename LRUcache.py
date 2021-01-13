@@ -81,7 +81,16 @@ class LRU_Cache(object):
 		self.doubly_ll = Doubly_Linked_List()
 
 	def get(self, key):
-		pass
+		'''Retrieve item provided key. Return -1 if nonexistent.'''
+		if self.hash_map.get(key):
+			#Update the item to be the Most Recently Used
+			self.doubly_ll.update(self.hash_map[key])
+			if len(self.hash_map) < self.capacity:
+				print(self.hash_map[key])
+				return self.hash_map[key]
+		else:
+			print("{} is not present in the cache.".format(key))
+			return -1
 
 	def set(self, key, value):
 		pass
