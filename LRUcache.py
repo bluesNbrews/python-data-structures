@@ -93,7 +93,21 @@ class LRU_Cache(object):
 			return -1
 
 	def set(self, key, value):
-		pass
+		'''Set the value if the key is not present in the cache. If the cache is at capacity, remove the oldest item.''' 
+		if len(self.hash_map) < self.capacity and not self.hash_map.get(key):
+			self.hash_map[key] = value
+			self.doubly_ll.prepend(value)
+		else:
+			#For a full hash map, first iterate through the hash map to find the corresponding key and delete both key and value from hash map.
+			for k,v in self.hash_map.items():
+				if v == self.doubly_ll.get_LRU_value():
+					remove_key = k
+			del self.hash_map[remove_key]
+			#Second, remove the LRU item in the list and then add the new desired node & key / item pair.
+			self.doubly_ll.remove_LRU_item()
+			self.doubly_ll.prepend(value)
+			self.hash_map[key] = value
+			return
 
 def main():
 	pass
