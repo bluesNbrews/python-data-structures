@@ -25,3 +25,8 @@ def find_files(suffix, path):
         if suffix in os.path.basename(path):
             #print("Found: {}".format(os.path.basename(path)))
             files_found.append(path)
+
+files_found = []
+
+find_files(".c","/Users/stevenwilliams/Desktop/python_stuff/P1/testdir")
+print(files_found)
