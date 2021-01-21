@@ -31,3 +31,21 @@ def is_user_in_group(user, group):
       user(str): user name/id
       group(class:Group): group to check user membership against
     """
+    group_list = group.get_groups()
+    for g in group_list:
+        print(g)
+        if not g.groups:
+            print("Empty list")
+            user_list = g.get_users()
+            for u in user_list:
+                print(u)
+                if u == str(user):
+                    print("True")
+                    result = True
+                else:
+                    print("False")
+                    result = False
+            return result
+        if isinstance(g, Group):
+            result = is_user_in_group(user, g)
+    return result
