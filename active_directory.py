@@ -49,3 +49,26 @@ def is_user_in_group(user, group):
         if isinstance(g, Group):
             result = is_user_in_group(user, g)
     return result
+
+parent = Group("parent")
+child_a = Group("child_a")
+child_b = Group("child_b")
+sub_child_1 = Group("subchild1")
+sub_child_2 = Group("subchild2")
+
+sub_child_user_a = "sub_child_user_a"
+sub_child_user_b = "sub_child_user_b"
+sub_child_user_c = "sub_child_user_c"
+
+parent.add_group(child_a)
+parent.add_group(child_b)
+
+child_a.add_group(sub_child_1)
+child_b.add_group(sub_child_2)
+
+sub_child_1.add_user(sub_child_user_a)
+sub_child_1.add_user(sub_child_user_b)
+sub_child_2.add_user(sub_child_user_c)
+
+search_result = is_user_in_group("sub_child_user_c", parent)
+print("The search result is {}".format(search_result))
