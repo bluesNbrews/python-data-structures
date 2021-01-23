@@ -13,7 +13,11 @@ class Block(object):
         self.next = None
 
     def calc_hash(self, data):
-        pass
+        '''Calculate SHA-256 hash for the Greenwich Mean Time when the block was created, and text strings as the data.'''
+        sha = hashlib.sha256()
+        hash_str = data.encode('utf-8')
+        sha.update(hash_str)
+        return sha.hexdigest()
 
     def __str__(self):
        '''Return attribute values as a string for Block object'''
