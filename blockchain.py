@@ -31,7 +31,23 @@ class Blockchain(object):
         self.tail = None
 
     def append(self, data):
-        pass
+        '''Add a new block to the end of the Blockchain'''
+        if self.head == None:
+            self.head = Block(data)
+            self.tail = self.head
+            return
+        else:
+            new_block = Block(data)
+            self.tail.next = new_block
+            new_block.previous_hash = self.tail.hash
+            self.tail = new_block
+            return 
 
     def print(self):
-        pass
+        '''Iterate through the entire Blockchain (starting with the head) and print the attribute values'''    
+        if self.head == None:
+            return
+        curr_node = self.head
+        while curr_node:
+            print(curr_node)
+            curr_node = curr_node.next
