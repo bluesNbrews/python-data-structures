@@ -53,7 +53,18 @@ class LinkedList:
             curr_node = curr_node.next
 
 def union(llist_1, llist_2):
-    pass
+    '''Combine all values in two linked lists into a new linked list'''    
+    new_list = LinkedList()
+
+    my_gen1 = llist_1.traverse()
+    for node in range(llist_1.size()):
+        new_list.append(next(my_gen1))
+
+    my_gen2 = llist_2.traverse()
+    for node in range(llist_2.size()):
+        new_list.append(next(my_gen2))
+
+    return new_list
 
 def intersection(llist_1, llist_2):
     pass
