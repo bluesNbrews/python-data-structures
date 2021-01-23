@@ -51,3 +51,11 @@ class Blockchain(object):
         while curr_node:
             print(curr_node)
             curr_node = curr_node.next
+
+bc = Blockchain()
+bc.append('123xyz')
+bc.append('321zyx')
+bc.append('456stu')
+bc.append('654uts')
+
+bc.print()
