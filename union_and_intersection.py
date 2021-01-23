@@ -67,5 +67,21 @@ def union(llist_1, llist_2):
     return new_list
 
 def intersection(llist_1, llist_2):
-    pass
+    '''Find the values that exist in both lists and add to a new linked list'''
+    new_list = LinkedList()
+    my_gen1 = llist_1.traverse()
+    intersection_values = set()
+
+    for node in range(llist_1.size()):
+        llist_1_value = next(my_gen1)
+        my_gen2 = llist_2.traverse()
+        for node in range(llist_2.size()):
+            llist_2_value = next(my_gen2)
+            if llist_1_value == llist_2_value:
+                intersection_values.add(llist_1_value)
+
+    for value in intersection_values:
+        new_list.append(value)
+
+    return new_list
 
