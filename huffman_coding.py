@@ -8,19 +8,72 @@ class MinHeap:
         self.current_size = 0
 
     def sift_up(self, i):
-        pass
+        """Move the value to its appropriate position in the min heap (following the definition of a min heap)"""
+        #While the element is not the min value (top) or the second value in the min heap
+        while i // 2 > 0:
+            # Swap the values if the current value is less than it's parent value
+            if self.heap_list[i][0] < self.heap_list[i // 2][0]:
+                self.heap_list[i], self.heap_list[i // 2] = self.heap_list[i // 2], self.heap_list[i]
+                # Move the index to the parent value (moving up the tree)
+            i = i // 2
 
     def insert(self, k):
-        pass
+        """Add a new value to the min heap"""
+        #Append the element to the min heap
+        self.heap_list.append(k)
+        #Increase the size of the min heap
+        self.current_size += 1
+        #Move the value to its appropriate position in the min heap (following the definition of a min heap)
+        self.sift_up(self.current_size)
 
     def sift_down(self, i):
-        pass
+        """Move the passed in value to it's appropriate position in the min heap"""
+        #If the current value has at least one child
+        while (i * 2) <= self.current_size:
+            #For the current value, get the index of the child with the least value (min child)
+            mc = self.min_child(i)
+            # If the current value is greater than it's "min child" value, swap the values
+            if self.heap_list[i][0] > self.heap_list[mc][0]:
+                self.heap_list[i], self.heap_list[mc] = self.heap_list[mc], self.heap_list[i]
+            i = mc
 
     def min_child(self, i):
-        pass
+        """Get the index of the child with the least value"""
+        # If the current node only has one child, return the index of the unique child
+        if (i * 2) + 1 > self.current_size:
+            return i * 2
+        else:
+            # Herein the current node has two children
+            # Return the index of the min child according to their values
+            if self.heap_list[i * 2][0] < self.heap_list[(i * 2) + 1][0]:
+                return i * 2
+            else:
+                return (i * 2) + 1
 
     def delete_min(self):
-        pass
+        """Return and remove the min value from the heap"""
+        #The length is 1 because the heap list was initialized with 0
+        if len(self.heap_list) == 1:
+            return "Empty heap."
+
+        #Store the min value of the heap
+        top = self.heap_list[1]
+
+        #Move the last value of the heap to the top
+        self.heap_list[1] = self.heap_list[self.current_size]
+
+        #Pop the last value from the heap (that was moved to the top)
+        *self.heap_list, _ = self.heap_list
+
+        # Decrease the size of the heap
+        self.current_size -= 1
+
+        #Move down the top value to the appropriate position (following the definition of a min heap)
+        #The value is at index 1 since the heap list was initialized with 0) 
+        self.sift_down(1)
+
+        #Return the min value of the heap
+        return top
 
     #Print the min heap as a string
     def __repr__(self):
