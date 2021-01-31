@@ -30,7 +30,7 @@ class Blockchain(object):
         self.head = None
         self.tail = None
 
-    def append(self, data):
+    def append(self, data=''):
         '''Add a new block to the end of the Blockchain'''
         if self.head == None:
             self.head = Block(data)
@@ -52,10 +52,13 @@ class Blockchain(object):
             print(curr_node)
             curr_node = curr_node.next
 
-bc = Blockchain()
-bc.append('123xyz')
-bc.append('321zyx')
-bc.append('456stu')
-bc.append('654uts')
+if __name__ == "__main__":
 
-bc.print()
+    bc = Blockchain()
+    #Test Cases 1-5
+    bc.append('123xyz')
+    bc.append('321zyx')
+    bc.append()
+    bc.append('456stu')
+    bc.append('654uts')
+    bc.print()
