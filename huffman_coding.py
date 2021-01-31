@@ -409,7 +409,20 @@ if __name__ == "__main__":
 
     print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
     print ("The content of the decoded data is: {}\n".format(decoded_data))
+    '''
+    Expected output:
+    The size of the data is: 69
 
+    The content of the data is: The bird is the word
+
+    The size of the encoded data is: 36
+
+    The content of the encoded data is: 0100011100111101100000111001110001101111111010011100111101001010011100
+
+    The size of the decoded data is: 69
+
+    The content of the decoded data is: The bird is the word
+    '''
     #Test Case 2
     a_great_sentence2 = "Music is the universal language"
     print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence2)))
@@ -424,7 +437,20 @@ if __name__ == "__main__":
 
     print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
     print ("The content of the decoded data is: {}\n".format(decoded_data))
+    '''
+    Expected output:
+    The size of the data is: 80
 
+    The content of the data is: Music is the universal language
+
+    The size of the encoded data is: 40
+
+    The content of the encoded data is: 110001111001111001101101111000110111001100110001011111011111101001000001100001010100010110000100111110111110101101000
+
+    The size of the decoded data is: 80
+
+    The content of the decoded data is: Music is the universal language
+    '''
     #Test Case 3
     a_great_sentence3 = "This is a sentence with weird characters: !@#$%^&*(), 1234567890"
     print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence3)))
@@ -439,3 +465,17 @@ if __name__ == "__main__":
 
     print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
     print ("The content of the decoded data is: {}\n".format(decoded_data))
+    '''
+    Expected output:
+    The size of the data is: 113
+
+    The content of the data is: This is a sentence with weird characters: !@#$%^&*(), 1234567890
+
+    The size of the encoded data is: 68
+
+    The content of the encoded data is: 011000000010101001010101010010100010010100111101101111111111011011000111100100111010101111100000100111011101010111101000000100001000000101111000100001111111110111101001100001010110100110001001100001101011010110010001111110011001110100011110000010101100101101011111100010011110110101011011101111101110011001
+
+    The size of the decoded data is: 113
+
+    The content of the decoded data is: This is a sentence with weird characters: !@#$%^&*(), 1234567890
+    '''

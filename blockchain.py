@@ -55,10 +55,18 @@ class Blockchain(object):
 if __name__ == "__main__":
 
     bc = Blockchain()
-    #Test Cases 1-5
+    #Test Cases 1-. The time will vary as to when this is run. I believe the hash values will vary as well. 
     bc.append('123xyz')
     bc.append('321zyx')
     bc.append()
     bc.append('456stu')
     bc.append('654uts')
     bc.print()
+    '''
+    Expected output (example):
+    06:18:53 31 Jan 2021 UTC, 123xyz, 0, 6a6cd536035e87176af9fce1b91cf9c9e2ba665c8f28df77135db881b388387b
+    06:18:53 31 Jan 2021 UTC, 321zyx, 6a6cd536035e87176af9fce1b91cf9c9e2ba665c8f28df77135db881b388387b, 2ad78df58fdb5d7d79b5dab31573e23be70ebafa4b8139984564778cfab8c8be
+    06:18:53 31 Jan 2021 UTC, , 2ad78df58fdb5d7d79b5dab31573e23be70ebafa4b8139984564778cfab8c8be, e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    06:18:53 31 Jan 2021 UTC, 456stu, e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855, be66970dfa2e7fe733817d26ed948b2cc00cfb92ce4794a4bf3265ef0739449a
+    06:18:53 31 Jan 2021 UTC, 654uts, be66970dfa2e7fe733817d26ed948b2cc00cfb92ce4794a4bf3265ef0739449a, cfcf44387f35b60539b2ee8f4759e081b71595727cd3e7d95f782589588eec9f
+    '''

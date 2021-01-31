@@ -71,6 +71,7 @@ class Doubly_Linked_List(object):
 		while curr_node:
 			print(curr_node.value)
 			curr_node = curr_node.next
+		print("\n")
 
 class LRU_Cache(object):
 
@@ -90,7 +91,7 @@ class LRU_Cache(object):
 				return self.hash_map[key]
 		else:
 			print("{} is not present in the cache.".format(key))
-			return -1
+			return - 1
 
 	def set(self, key, value):
 		'''Set the value if the key is not present in the cache. If the cache is at capacity, remove the oldest item.''' 
@@ -109,7 +110,7 @@ class LRU_Cache(object):
 			self.hash_map[key] = value
 			return
 
-def main():
+if __name__ == "__main__":
 	#LRU_Cache object for testing
 	our_cache = LRU_Cache(5)
 
@@ -119,44 +120,78 @@ def main():
 	our_cache.set(3, 3)
 	our_cache.set(4, 4)
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 2
 	our_cache.get(1)          # Returns 1
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 3
 	our_cache.get(2)          # Returns 2
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 4
 	our_cache.get(9)          # Returns -1 because 9 is not present in the cache
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 5
 	our_cache.set(5, 5)
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 6
 	our_cache.set(6, 6)
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
 	#Test Case 7
 	our_cache.get(3)          #Returns -1 because the cache reached it's capacity and 3 was the least recently used entry
 	our_cache.doubly_ll.print()
-	print(our_cache.hash_map)
-	print("\n")
 
-if __name__ == "__main__":
-	main()
+	'''
+	Expected Output:
+	4
+	3
+	2
+	1
+
+
+	1
+	1
+	4
+	3
+	2
+
+
+	2
+	2
+	1
+	4
+	3
+
+
+	9 is not present in the cache.
+	2
+	1
+	4
+	3
+
+
+	5
+	2
+	1
+	4
+	3
+
+
+	6
+	5
+	2
+	1
+	4
+
+
+	3 is not present in the cache.
+	6
+	5
+	2
+	1
+	4
+	'''
