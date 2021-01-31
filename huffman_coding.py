@@ -189,7 +189,6 @@ class Node(object):
     def has_right_child(self):
         return self.right != None
     
-    # define __repr_ to decide what a print statement displays for a Node object
     def __repr__(self):
         return f"Node({self.get_value()})"
     
@@ -197,55 +196,246 @@ class Node(object):
         return f"Node({self.get_value()})"
 
 class Tree():
+    """For this program, the Tree object is the only node in the min heap (root of the Tree) which has pointers to other nodes and values"""
     def __init__(self):
         self.root = None
         
     def set_root(self,value):
-        pass
+        self.root = Node(value)
         
     def get_root(self):
-        pass
+        return self.root
 
-    def pre_order_dfs(self):
-        pass
+    def get_encoded_values(self):
+        """Get encoded values for each node in the tree (store in a dictionary)"""
+        stack = Stack()
+        visit_order = []
+        node = self.get_root().get_value()[1]
+        visit_order.append(node)
+        state = State(node)
+        stack.push(state)
+        count = 0
+        encoded_value = ""
+        ecv = {}
 
-    def print_dfs(self):
-        pass
+        while(node):
+            count += 1
+
+            if node.has_left_child() and not state.get_visited_left():
+                encoded_value += "0"
+                state.set_visited_left()
+                node = node.get_left_child()[1]
+                if type(node) == str:
+                    node = Node(node)
+                visit_order.append(node.get_value())
+                state = State(node)
+                stack.push(state)
+                ecv[node] = encoded_value
+
+            elif node.has_right_child() and not state.get_visited_right():
+                encoded_value += "1"
+                state.set_visited_right()
+                node = node.get_right_child()[1]
+                if type(node) == str:
+                    node = Node(node)
+                visit_order.append(node.get_value())
+                state = State(node)
+                stack.push(state)
+                ecv[node] = encoded_value
+
+            else:
+                stack.pop()
+                if not stack.is_empty():
+                    state = stack.top()
+                    node = state.get_node()
+                else:
+                    node = None
+                if ecv.get(node):
+                    encoded_value = ecv[node]
+                else:
+                    encoded_value = ""
+
+        return ecv
+
+    def get_decoded_value(self, encoded_s):
+        """Get the decoded string from the encoded string. The decoded string is obtained by performing a Depth First Search on the tree"""
+        stack = Stack()
+        node = self.get_root().get_value()[1]
+        state = State(node)
+        stack.push(state)
+        count = 0
+        decoded_s = ""
+        
+        while node and count < len(encoded_s):
+            if encoded_s[count] == '0':
+                if type(node) == str:
+                    decoded_s += node
+                    node = self.get_root().get_value()[1]
+                if node.has_left_child(): 
+                    node = node.get_left_child()[1]
+                    # Handle case for the last character found from the encoded string
+                    if count == len(encoded_s) - 1:
+                        decoded_s += node
+                    count += 1
+            else: # Go to right node
+                if type(node) == str:
+                    decoded_s += node
+                    node = self.get_root().get_value()[1]
+                if node.has_right_child():    
+                    node = node.get_right_child()[1]
+                    # Handle case for the last character found from the encoded string
+                    if count == len(encoded_s) - 1:
+                        decoded_s += node
+                    count += 1
+
+        return decoded_s 
 
     def bfs(self):
-        pass
+        """Get the visit order of the tree using a Breadth First Search"""
+        level = 0
+        q = Queue()
+        visit_order = list()
+        node = self.get_root()
+        q.enq( (node.get_value()[1],level) )
+        while(len(q) > 0):
+            node, level = q.deq()
+            if node == None:
+                visit_order.append( ("<empty>", level))
+                continue
+            visit_order.append( (node, level) )
+            if type(node) == str:
+                q.enq( (None, level +1) )
+                q.enq( (None, level +1) )
+                continue
+            if node.has_left_child():
+                q.enq( (node.get_left_child()[1], level +1 ))
+            else:
+                q.enq( (None, level +1) )
+
+            if node.has_right_child():
+                q.enq( (node.get_right_child()[1], level +1 ))
+            else:
+                q.enq( (None, level +1) )
+
+        return visit_order
 
     def print_bfs(self):
-        pass
+        """Take the visit order from the Breadth First Search and print out the tree"""
+        visit_order = self.bfs()
+        s = "Tree (from BFS)\n"
+        previous_level = -1
+        for i in range(len(visit_order)):
+            node, level = visit_order[i]
+            if level == previous_level:
+                s += " | " + str(node) 
+            else:
+                s += "\n" + str(node)
+                previous_level = level
     
         return s
-                        
+                      
     def __repr__(self):
-        pass
+        """Print the tree when an instance of the Tree object is called"""
+        s = self.print_bfs()
+        return s
 
 def huffman_encoding(data):
-    pass
+    """Encode the sentence using Huffman Coding"""
+    codes = {}
+    #Create a dictionary from the sentence (characters:number of occurences)
+    for letter in data:
+        if codes.get(letter):
+            codes[letter] += 1
+        else:
+            codes[letter] = 1
+
+    #Create a min heap from the dictionary
+    my_heap = MinHeap()
+    for k,v in codes.items():
+        my_heap.insert((v,k))
+
+    #Remove two min values (character ) in the heap from the heap and consolidate
+    for i in range(my_heap.current_size - 1):
+        elem1 = my_heap.delete_min()
+        elem2 = my_heap.delete_min()
+
+        new_node = Node(elem1[0] + elem2[0])
+        new_node.set_left_child(elem1)
+        new_node.set_right_child(elem2)
+
+        my_heap.insert((new_node.get_value(), new_node))
+
+    #Remove the min value from the min heap and set as the root of the tree. This min value will be a node that has combined valued of it's child nodes. 
+    root = my_heap.delete_min()
+    my_tree = Tree()
+    my_tree.set_root(root)
+
+    #Get the encoded values for each character as a dictionary
+    encoded_values = my_tree.get_encoded_values()
+    encoded_string = ""
+
+    #Add the encoded value to the other dictionary that contains each character and it's frequency 
+    for key, value in encoded_values.items():
+        if key.get_value() in codes:
+            codes[key.get_value()] = (codes[key.get_value()], value)
+
+    #Generate and return the encoded string based on the passed in sentence
+    for letter in data:
+        if letter in codes:
+            encoded_string += codes[letter][1]
+
+    return encoded_string, my_tree
 
 def huffman_decoding(data,tree):
-    pass
+    """Decode the sentence using Huffman Coding"""
+    decoded_string = ""
+    decoded_data = tree.get_decoded_value(data)
 
-def print_tree(node):
-    pass
+    return decoded_data
 
 if __name__ == "__main__":
-    a_great_sentence = "The bird is the word"
+    #Test Case 1
+    a_great_sentence1 = "The bird is the word"
 
-    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence)))
-    print ("The content of the data is: {}\n".format(a_great_sentence))
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence1)))
+    print ("The content of the data is: {}\n".format(a_great_sentence1))
 
-    #encoded_data, tree = huffman_encoding(a_great_sentence)
+    encoded_data, tree = huffman_encoding(a_great_sentence1)
 
-    #print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
-    #print ("The content of the encoded data is: {}\n".format(encoded_data))
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
 
-    #decoded_data = huffman_decoding(encoded_data, tree)
+    decoded_data = huffman_decoding(encoded_data, tree)
 
-    #print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
-    #print ("The content of the encoded data is: {}\n".format(decoded_data))
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print ("The content of the decoded data is: {}\n".format(decoded_data))
 
-    
+    #Test Case 2
+    a_great_sentence2 = "Music is the universal language"
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence2)))
+    print ("The content of the data is: {}\n".format(a_great_sentence2))
+
+    encoded_data, tree = huffman_encoding(a_great_sentence2)
+
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print ("The content of the decoded data is: {}\n".format(decoded_data))
+
+    #Test Case 3
+    a_great_sentence3 = "This is a sentence with weird characters: !@#$%^&*(), 1234567890"
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence3)))
+    print ("The content of the data is: {}\n".format(a_great_sentence3))
+
+    encoded_data, tree = huffman_encoding(a_great_sentence3)
+
+    print ("The size of the encoded data is: {}\n".format(sys.getsizeof(int(encoded_data, base=2))))
+    print ("The content of the encoded data is: {}\n".format(encoded_data))
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+
+    print ("The size of the decoded data is: {}\n".format(sys.getsizeof(decoded_data)))
+    print ("The content of the decoded data is: {}\n".format(decoded_data))
