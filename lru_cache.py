@@ -120,28 +120,16 @@ if __name__ == "__main__":
 	our_cache.set(3, 3)
 	our_cache.set(4, 4)
 	our_cache.doubly_ll.print()
-
-	#Test Case 2
 	our_cache.get(1)          # Returns 1
 	our_cache.doubly_ll.print()
-
-	#Test Case 3
 	our_cache.get(2)          # Returns 2
 	our_cache.doubly_ll.print()
-
-	#Test Case 4
 	our_cache.get(9)          # Returns -1 because 9 is not present in the cache
 	our_cache.doubly_ll.print()
-
-	#Test Case 5
 	our_cache.set(5, 5)
 	our_cache.doubly_ll.print()
-
-	#Test Case 6
 	our_cache.set(6, 6)
 	our_cache.doubly_ll.print()
-
-	#Test Case 7
 	our_cache.get(3)          #Returns -1 because the cache reached it's capacity and 3 was the least recently used entry
 	our_cache.doubly_ll.print()
 
@@ -195,3 +183,11 @@ if __name__ == "__main__":
 	1
 	4
 	'''
+	#Test Case #2
+	our_cache2 = LRU_Cache(0)
+	print(our_cache2)
+	#Please create an object with a capacity greater than 0 or None.
+	#Test Case #3
+	our_cache3 = LRU_Cache(None)
+	print(our_cache3)
+	#Please create an object with a capacity greater than 0 or None.

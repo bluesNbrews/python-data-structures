@@ -341,6 +341,9 @@ class Tree():
 
 def huffman_encoding(data):
     """Encode the sentence using Huffman Coding"""
+    if data == "" or data == None:
+        print("Please provide data to encode.")
+        return None, None
     codes = {}
     #Create a dictionary from the sentence (characters:number of occurences)
     for letter in data:
@@ -388,6 +391,12 @@ def huffman_encoding(data):
 
 def huffman_decoding(data,tree):
     """Decode the sentence using Huffman Coding"""
+    if data == "" or data == None:
+        print("Please provide data to decode.")
+        return 
+    if tree == None:
+        print("Please provide data to decode.")
+        return
     decoded_string = ""
     decoded_data = tree.get_decoded_value(data)
 
@@ -478,4 +487,36 @@ if __name__ == "__main__":
     The size of the decoded data is: 113
 
     The content of the decoded data is: This is a sentence with weird characters: !@#$%^&*(), 1234567890
+    '''
+    # Test Case 4 
+    a_great_sentence4 = ""
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence4)))
+    print ("The content of the data is: {}\n".format(a_great_sentence4))
+
+    encoded_data, tree = huffman_encoding(a_great_sentence4)
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+    '''
+    The size of the data is: 49
+
+    The content of the data is: 
+
+    Please provide data to encode.
+    Please provide data to decode.
+    '''
+    # Test Case 5
+    a_great_sentence5 = None
+    print ("The size of the data is: {}\n".format(sys.getsizeof(a_great_sentence5)))
+    print ("The content of the data is: {}\n".format(a_great_sentence5))
+
+    encoded_data, tree = huffman_encoding(a_great_sentence5)
+
+    decoded_data = huffman_decoding(encoded_data, tree)
+    '''
+    The size of the data is: 16
+
+    The content of the data is: None
+
+    Please provide data to encode.
+    Please provide data to decode.
     '''
